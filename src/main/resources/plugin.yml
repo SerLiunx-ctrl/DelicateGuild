@@ -1,0 +1,9 @@
+name: DelicateGuild
+version: '${project.version}'
+main: github.serliunx.delicateguild.DelicateGuild
+authors: [ SerLiunx ]
+description: a guild plugin.
+commands:
+  delicateguild:
+    aliases: ["dguild", dg]
+    description: main command for DelicateGuild.

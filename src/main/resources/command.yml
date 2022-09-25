@@ -1,0 +1,21 @@
+help:
+  description: "&a查看帮助."
+  syntax: "&e/dguild help <指令>"
+  enable: true
+reload:
+  description: "&a重载插件."
+  syntax: "&e/dguild reload <参数>"
+  enable: true
+  childs:
+    lang:
+      description: "&a重载 lang.yml"
+      syntax: "&e/dguild reload lang"
+      enable: true
+    main:
+      description: "&a重载 config.yml"
+      syntax: "&e/dguild reload main"
+      enable: true
+    command:
+      description: "&a重载 command.yml"
+      syntax: "&e/dguild reload command"
+      enable: true

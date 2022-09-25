@@ -1,0 +1,16 @@
+#Language for commands.
+command_no_permission: "&c权限不足! {0}"
+command_no_exists: "&c指令不存在: &e{0}"
+command_help_header: "&a&l========== &e&lDelicateGuild - 指令 &a&l=========="
+command_help_footer: "&a&l===================================="
+
+#Language for cooldown
+in_cooldown: "&c太快了! 等待 &e{seconds} &c秒后再试试吧."
+
+#Language for plugin information.
+about_plugin:
+  - "&a&lDelicateGuild"
+  - "&e&lAuthor: &7&lSerLiunx"
+  - "&d&lGithub: SerLiunx_ctrl"
+  - "&2&lmail: serliunx@yeah.net"
+  - "&d&lWebSite: www.serliunx.com"
