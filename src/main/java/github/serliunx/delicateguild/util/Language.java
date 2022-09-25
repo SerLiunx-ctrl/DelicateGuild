@@ -1,7 +1,7 @@
 package github.serliunx.delicateguild.util;
 
 import github.serliunx.delicateguild.DelicateGuild;
-import github.serliunx.delicateguild.allenum.YamlFile;
+import github.serliunx.delicateguild.allenum.YamlFiles;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ public class Language {
     private final FileConfiguration langFile;
 
     public Language() {
-        langFile = DelicateGuild.getInstance().getConfigManager().getByConfigName(YamlFile.YAML_LANGUAGE.getValue()).getConfiguration();
+        langFile = DelicateGuild.getInstance().getConfigManager().getByConfigName(YamlFiles.YAML_LANGUAGE.getValue()).getConfiguration();
         this.loadLanguage();
     }
 

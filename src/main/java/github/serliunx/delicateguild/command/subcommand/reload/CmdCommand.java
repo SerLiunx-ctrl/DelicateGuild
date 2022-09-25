@@ -1,7 +1,7 @@
 package github.serliunx.delicateguild.command.subcommand.reload;
 
 import github.serliunx.delicateguild.DelicateGuild;
-import github.serliunx.delicateguild.allenum.YamlFile;
+import github.serliunx.delicateguild.allenum.YamlFiles;
 import github.serliunx.delicateguild.command.Command;
 import github.serliunx.delicateguild.util.StringUtils;
 import org.bukkit.command.CommandSender;
@@ -18,9 +18,9 @@ public class CmdCommand extends Command {
 
     @Override
     public boolean execute(CommandSender sender, String[] arguments) {
-        if(DelicateGuild.getInstance().getConfigManager().getByConfigName(YamlFile.YAML_COMMAND.getValue()).reloadConfig()){
+        if(DelicateGuild.getInstance().getConfigManager().getByConfigName(YamlFiles.YAML_COMMAND.getValue()).reloadFile()){
             DelicateGuild.getInstance().getCommandManager().reloadCommands();
-            sender.sendMessage(StringUtils.Color("command config reloaded!"));
+            sender.sendMessage(StringUtils.Color("&acommand config reloaded!"));
             return true;
         }
         return false;

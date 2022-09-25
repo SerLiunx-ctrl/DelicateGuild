@@ -1,6 +1,6 @@
 package github.serliunx.delicateguild.allenum;
 
-public enum YamlFile {
+public enum YamlFiles {
 
     YAML_MAIN("config"),
     YAML_COMMAND("command"),
@@ -8,7 +8,7 @@ public enum YamlFile {
 
     private final String value;
 
-    YamlFile(String value){
+    YamlFiles(String value){
         this.value = value;
     }
 

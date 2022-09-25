@@ -18,6 +18,8 @@ public final class DelicateGuild extends JavaPlugin {
     private MemberManager memberManager;
     private GuildManager guildManager;
 
+    private MenuManager menuManager;
+
     @Override
     public void onLoad(){
         instance = this;
@@ -33,6 +35,7 @@ public final class DelicateGuild extends JavaPlugin {
         dataManager = new DataManager();
         memberManager = new MemberManager();
         guildManager = new GuildManager();
+        menuManager = new MenuManager();
 
         Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
     }
@@ -72,5 +75,9 @@ public final class DelicateGuild extends JavaPlugin {
 
     public DataManager getDataManager() {
         return dataManager;
+    }
+
+    public MenuManager getMenuManager() {
+        return menuManager;
     }
 }

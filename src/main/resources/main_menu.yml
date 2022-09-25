@@ -1,0 +1,9 @@
+#主菜单配置文件
+
+#菜单的ID 请不要修改！
+id: "mainmenu"
+title: "DelicateGuild Menu"
+
+#菜单尺寸[请勿直接填写数字]: ONE_ROW(9), TWO_ROWS(18), THREE_ROWS(27), FOUR_ROWS(36), FIVE_ROWS(45), SIX_ROWS(54)
+#行数(格子数量)
+size: "SIX_ROWS"

@@ -1,7 +1,7 @@
 package github.serliunx.delicateguild.command.subcommand.reload;
 
 import github.serliunx.delicateguild.DelicateGuild;
-import github.serliunx.delicateguild.allenum.YamlFile;
+import github.serliunx.delicateguild.allenum.YamlFiles;
 import github.serliunx.delicateguild.command.Command;
 import github.serliunx.delicateguild.util.StringUtils;
 import org.bukkit.command.CommandSender;
@@ -18,8 +18,8 @@ public class MainCommand extends Command {
 
     @Override
     public boolean execute(CommandSender sender, String[] arguments) {
-        if(DelicateGuild.getInstance().getConfigManager().getByConfigName(YamlFile.YAML_MAIN.getValue()).reloadConfig()){
-            sender.sendMessage(StringUtils.Color("main config reloaded!"));
+        if(DelicateGuild.getInstance().getConfigManager().getByConfigName(YamlFiles.YAML_MAIN.getValue()).reloadFile()){
+            sender.sendMessage(StringUtils.Color("&amain config reloaded!"));
             return true;
         }
         return false;

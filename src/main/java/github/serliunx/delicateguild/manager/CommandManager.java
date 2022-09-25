@@ -1,7 +1,7 @@
 package github.serliunx.delicateguild.manager;
 
 import github.serliunx.delicateguild.DelicateGuild;
-import github.serliunx.delicateguild.allenum.YamlFile;
+import github.serliunx.delicateguild.allenum.YamlFiles;
 import github.serliunx.delicateguild.command.Command;
 import github.serliunx.delicateguild.command.Commands;
 import github.serliunx.delicateguild.util.StringUtils;
@@ -29,7 +29,7 @@ public class CommandManager implements CommandExecutor, TabCompleter {
             pluginCommand.setExecutor(this);
             pluginCommand.setTabCompleter(this);
         }
-        commandConfiguration = DelicateGuild.getInstance().getConfigManager().getByConfigName(YamlFile.YAML_COMMAND.getValue()).getConfiguration();
+        commandConfiguration = DelicateGuild.getInstance().getConfigManager().getByConfigName(YamlFiles.YAML_COMMAND.getValue()).getConfiguration();
         registerCommands();
     }
 
