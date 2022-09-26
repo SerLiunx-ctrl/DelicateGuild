@@ -37,7 +37,7 @@ public final class DelicateGuild extends JavaPlugin {
         guildManager = new GuildManager();
         menuManager = new MenuManager();
 
-        Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerListener(this), this);
     }
 
     @Override

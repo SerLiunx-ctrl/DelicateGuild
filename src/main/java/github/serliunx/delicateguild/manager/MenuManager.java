@@ -2,7 +2,10 @@ package github.serliunx.delicateguild.manager;
 
 import github.serliunx.delicateguild.DelicateGuild;
 import github.serliunx.delicateguild.allenum.GUISize;
+import github.serliunx.delicateguild.menu.Button;
+import github.serliunx.delicateguild.menu.ButtonBuilder;
 import github.serliunx.delicateguild.menu.Menu;
+import github.serliunx.delicateguild.menu.inventory.InventoryButton;
 import github.serliunx.delicateguild.menu.inventory.InventoryMenu;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.Inventory;
@@ -19,22 +22,38 @@ public class MenuManager {
         loadMenus();
     }
 
+    /**
+     * 针对菜单的初始化才做
+     */
     private void loadMenus(){
         for(String name:menuNames){
             FileConfiguration menuFile = DelicateGuild.getInstance().getConfigManager().getByConfigName(name)
                     .getConfiguration();
-            Menu mainMenu = new InventoryMenu(
+            Menu menu = new InventoryMenu(
                     menuFile.getString("title"),
                     menuFile.getString("id"),
                     GUISize.valueOf(menuFile.getString("size"))
             );
-            menus.put(mainMenu.getId(), mainMenu);
+            ButtonBuilder buttonBuilder = new ButtonBuilder(menuFile);
+            Map<Integer, Button> buttonMap = buttonBuilder.build();
+            for(Integer pos: buttonMap.keySet()){
+                menu.addButton(pos, buttonMap.get(pos));
+            }
+
+            menus.put(menu.getId(), menu);
         }
 
     }
 
     public Menu getById(String id){
         return menus.get(id);
+    }
+
+    public Menu getByInventory(Inventory inventory){
+        for(Menu menu:menus.values()){
+            if(menu.getInventory().equals(inventory)) return menu;
+        }
+        return null;
     }
 
     public Map<String, Menu> getMenus() {

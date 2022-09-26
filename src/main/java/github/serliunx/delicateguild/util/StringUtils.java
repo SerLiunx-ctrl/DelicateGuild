@@ -39,6 +39,7 @@ public class StringUtils {
     }
 
     private static String translateColorCodes(String text){
+        if(!text.contains("&"))return text;
 
         String[] texts = text.split(String.format(WITH_DELIMITER, "&"));
         texts[1].split("1");

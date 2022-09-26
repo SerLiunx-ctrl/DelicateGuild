@@ -11,7 +11,8 @@ public class InventoryMenu extends AbstractMenu {
     }
 
     @Override
-    public void Show(Player player) {
-        player.openInventory(super.getInventory());
+    public void show(Player player) {
+        create(player);
+        player.openInventory(getInventory());
     }
 }

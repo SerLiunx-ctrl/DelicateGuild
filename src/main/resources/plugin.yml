@@ -3,6 +3,7 @@ version: '${project.version}'
 main: github.serliunx.delicateguild.DelicateGuild
 authors: [ SerLiunx ]
 description: a guild plugin.
+api-version: 1.17
 commands:
   delicateguild:
     aliases: ["dguild", dg]

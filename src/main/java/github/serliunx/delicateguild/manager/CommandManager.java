@@ -81,7 +81,12 @@ public class CommandManager implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull org.bukkit.command.Command cmd, @NotNull String label, @NotNull String[] args) {
         if(args.length == 0){
-            DelicateGuild.getInstance().getCommands().helpCommand.execute(commandSender,new String[]{});
+            if(commandSender instanceof Player){
+                Player player = (Player)commandSender;
+                DelicateGuild.getInstance().getMenuManager().getById("mainmenu").show(player);
+            }else{
+                DelicateGuild.getInstance().getCommands().helpCommand.execute(commandSender,new String[]{});
+            }
             return false;
         }
         for(Command command : commands){

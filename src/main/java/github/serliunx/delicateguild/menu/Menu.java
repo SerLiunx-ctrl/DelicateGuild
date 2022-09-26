@@ -9,7 +9,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Map;
 
 public interface Menu{
-    void Show(Player player);
+    void show(Player player);
     String getTitle();
     void setTitle(String title);
     String getId();
@@ -17,7 +17,16 @@ public interface Menu{
     void setSize(GUISize size);
     Map<Integer, Button> getButtons();
     void addButton(int index, Button button);
-    void create();
+
+    /**
+     * <li>构建一个菜单
+     *
+     * <p>包括:
+     * <p>   添加容器
+     * <p>   给容器添加按钮
+     * <p>   包括初始化所有占位符, 给玩家打开菜单之前必须执行一个该方法
+     */
+    void create(Player player);
     Inventory getInventory();
     void setInventory(Inventory inventory);
     InventoryHolder getInventoryHolder();

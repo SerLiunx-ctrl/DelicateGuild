@@ -2,8 +2,53 @@
 
 #菜单的ID 请不要修改！
 id: "mainmenu"
-title: "DelicateGuild Menu"
-
+#菜单标题
+title: "&6&lDelicateGuild &b&lMenu"
 #菜单尺寸[请勿直接填写数字]: ONE_ROW(9), TWO_ROWS(18), THREE_ROWS(27), FOUR_ROWS(36), FIVE_ROWS(45), SIX_ROWS(54)
 #行数(格子数量)
 size: "SIX_ROWS"
+#按钮列表, 不需要加载的按钮请注释掉或者直接删除. 你也可以自行增加按钮，但不要重名. 且无比在这个列表中增加你按钮的ID
+#该项主旨在增加菜单读取速度, 建议自定义的按钮都加上 "button_" 的前缀
+buttons:
+  - "button_close"
+  - "button_barrier"
+
+
+#图标设置
+#关闭按钮, 这个即为该按钮的ID，请不要重复
+button_close:
+  #图标的标题
+  title: "&cClose"
+  #图标物品材质
+  material: "BARRIER"
+  #图标在菜单内的位置, 范围和菜单尺寸有关[0 ~ size-1]
+  #此处可填写多个数字 以快速填充位置，详见下方的 分隔符按钮
+  pos: 49
+  #图标的描述, 即显示在标题下方的文字
+  descriptions:
+    - "test"
+    - "&aTest"
+  #点击图标时, 你想要进行的操作. 因为本插件菜单功能相对固定
+  #可以自定义， 但建议保持最基本的功能. 不建议移除原有的操作，可以添加新操作
+  #此处可添加的操作有: [sound] - 播放声音, [command] - 执行指令, [openmenu] - 打开菜单(本插件内的菜单),[close] - 关闭菜单
+  actions:
+    - "[sound]"
+    - "[close]"
+
+#分隔符
+button_barrier:
+  title: " "
+  material: "PINK_STAINED_GLASS_PANE"
+  pos:
+    - 36
+    - 37
+    - 38
+    - 39
+    - 40
+    - 41
+    - 42
+    - 43
+    - 44
+  descriptions: null
+  actions: null
+#end

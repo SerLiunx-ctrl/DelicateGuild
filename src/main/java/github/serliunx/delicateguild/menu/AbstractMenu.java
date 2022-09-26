@@ -1,7 +1,9 @@
 package github.serliunx.delicateguild.menu;
 
 import github.serliunx.delicateguild.allenum.GUISize;
+import github.serliunx.delicateguild.util.StringUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.jetbrains.annotations.Nullable;
@@ -67,8 +69,12 @@ public abstract class AbstractMenu implements Menu{
     }
 
     @Override
-    public void create() {
-        this.inventory = Bukkit.createInventory(inventoryHolder, size, title);
+    public void create(Player player) {
+        this.inventory = Bukkit.createInventory(inventoryHolder, size, StringUtils.Color(title));
+
+        for(Integer index:buttons.keySet()){
+            this.inventory.setItem(index, buttons.get(index).getItem());
+        }
     }
 
     @Override
