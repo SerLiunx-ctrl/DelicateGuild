@@ -1,1 +1,24 @@
-#empty.
+#DelicateGuild main config file.
+
+#数据库设置
+database:
+  #数据库类型, 可选: MYSQL, SQLITE
+  driver: SQLITE
+  #MYSQL连接地址:
+  host: localhost
+  #MYSQL数据库端口
+  port: 3306
+  #数据库名, 即SQLITE的文件名
+  database: database
+  #MYSQL用户名
+  username: root
+  #MYSQL密码
+  password: password
+  #玩家数据表名称
+  playerTable: delicateguild_player
+  #群组数据表名称
+  guildTable: delicateguild_guild
+  #关系数据表名称
+  relationTable: delicateguild_relation
+  #日志数据表
+  logTable: delicateguild_log

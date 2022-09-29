@@ -7,6 +7,7 @@ import github.serliunx.delicateguild.menu.Menu;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
@@ -22,14 +23,14 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event){
-
+        instance.getMemberManager().createMember(event.getPlayer());
     }
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event){
-        if(!menuManager.contains(event.getInventory())) return;
         Menu menu = DelicateGuild.getInstance().getMenuManager().getByInventory(event.getInventory());
-        if(menu == null || event.getCurrentItem() == null || event.getCurrentItem().getItemMeta() == null) return;
+        if(menu == null) return;
+        if(event.getCurrentItem() == null || event.getCurrentItem().getItemMeta() == null) return;
 
         Player player = (Player) event.getWhoClicked();
         int pos = event.getSlot();

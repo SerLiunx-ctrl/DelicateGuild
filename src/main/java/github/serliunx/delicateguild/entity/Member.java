@@ -1,7 +1,6 @@
-package github.serliunx.delicateguild.entity.member;
+package github.serliunx.delicateguild.entity;
 
 import github.serliunx.delicateguild.allenum.Role;
-import github.serliunx.delicateguild.entity.guild.Guild;
 
 import java.util.UUID;
 
@@ -35,6 +34,24 @@ public interface Member {
      * @param guildBelong 指定公会
      */
     void setGuildBelong(Guild guildBelong);
+
+    /**
+     * 获取该用户对当前公会的贡献值
+     * @return 贡献值
+     */
+    int getContributionPoint();
+
+    /**
+     * 设置该用户对当前公会的工会值
+     * @param contributionPoint 贡献值
+     */
+    void setContributionPoint(int contributionPoint);
+
+    /**
+     * 为该用户添加对当前公会的贡献值
+     * @param contributionPoint 贡献值
+     */
+    void addContributionPoint(int contributionPoint);
 
     /**
      * 获取当前用户的公会角色

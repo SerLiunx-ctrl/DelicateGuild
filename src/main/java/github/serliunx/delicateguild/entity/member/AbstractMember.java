@@ -1,27 +1,29 @@
 package github.serliunx.delicateguild.entity.member;
 
 import github.serliunx.delicateguild.allenum.Role;
-import github.serliunx.delicateguild.entity.guild.Guild;
+import github.serliunx.delicateguild.entity.Guild;
+import github.serliunx.delicateguild.entity.Member;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
-public abstract class AbstractMember implements Member{
+public abstract class AbstractMember implements Member {
 
     private final UUID uuid;
     private final String name;
-    @Nullable
-    private Guild guildBelong;
+    private @Nullable Guild guildBelong;
+    private int contributionPoint;
     private Role role;
 
-    public AbstractMember(UUID uuid, String name, @Nullable Guild guildBelong) {
+    public AbstractMember(UUID uuid, String name, int contributionPoint, @Nullable Guild guildBelong) {
         this.uuid = uuid;
         this.name = name;
+        this.contributionPoint = contributionPoint;
         this.guildBelong = guildBelong;
     }
 
-    public AbstractMember(UUID uuid, String name) {
-        this(uuid, name, null);
+    public AbstractMember(UUID uuid, String name, int contributionPoint) {
+        this(uuid, name, contributionPoint, null);
     }
 
     @Override
@@ -44,6 +46,21 @@ public abstract class AbstractMember implements Member{
     public void setGuildBelong(@Nullable Guild guildBelong) {
         this.guildBelong = guildBelong;
         this.role = Role.MEMBER;
+    }
+
+    @Override
+    public int getContributionPoint() {
+        return contributionPoint;
+    }
+
+    @Override
+    public void setContributionPoint(int contributionPoint) {
+        this.contributionPoint = Math.max(contributionPoint, 0);
+    }
+
+    @Override
+    public void addContributionPoint(int contributionPoint){
+        this.contributionPoint += contributionPoint;
     }
 
     @Nullable
