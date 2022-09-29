@@ -23,7 +23,7 @@ public class MenuManager {
     }
 
     /**
-     * 针对菜单的初始化才做
+     * 针对菜单的初始化操作
      */
     private void loadMenus(){
         for(String name:menuNames){
@@ -51,6 +51,7 @@ public class MenuManager {
 
     public Menu getByInventory(Inventory inventory){
         for(Menu menu:menus.values()){
+            if(menu.getInventory() == null) break;
             if(menu.getInventory().equals(inventory)) return menu;
         }
         return null;
