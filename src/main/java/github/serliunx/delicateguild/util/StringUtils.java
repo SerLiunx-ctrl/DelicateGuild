@@ -6,13 +6,16 @@ import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
 public class StringUtils {
 
     private static final String WITH_DELIMITER = "((?<=%1$s)|(?=%1$s))";
+    public static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     /**
      * 转换颜色代码: &, 支持转换16进制的颜色代码"
@@ -290,6 +293,11 @@ public class StringUtils {
         blue = blue.length() == 1 ? "0" + blue : blue;
 
         return  "&#" + red + green + blue;
+    }
+
+    public static String formatDate(Date date){
+        SimpleDateFormat sdf = new SimpleDateFormat(DEFAULT_DATE_FORMAT);
+        return sdf.format(date);
     }
 
 }
