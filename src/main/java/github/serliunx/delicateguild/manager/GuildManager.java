@@ -7,6 +7,7 @@ import github.serliunx.delicateguild.entity.guild.SimpleGuild;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -72,6 +73,8 @@ public class GuildManager {
         }else {
             guild = new SimpleGuild(instance.getMemberManager().getMember(player.getUniqueId()),
                     id, 5);
+            guild.setCreateDate(new java.util.Date());
+
             instance.getDataManager().createRelation(guild, player, Role.OWNER);
         }
         guilds.put(id, guild);

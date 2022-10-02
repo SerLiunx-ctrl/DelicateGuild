@@ -8,7 +8,6 @@ import github.serliunx.delicateguild.util.StringUtils;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
-import java.security.acl.Owner;
 import java.util.*;
 
 public abstract class AbstractGuild implements Guild {
@@ -34,6 +33,8 @@ public abstract class AbstractGuild implements Guild {
         this.maxMembers = maxMembers > 0 ? maxMembers : 5;
         this.level = Math.max(level, 0);
         this.expNow = Math.max(expNow, 0);
+
+        addMember(owner);
     }
 
     public AbstractGuild(Member owner, String id, int maxMembers){
