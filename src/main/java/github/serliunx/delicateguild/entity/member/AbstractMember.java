@@ -5,6 +5,7 @@ import github.serliunx.delicateguild.entity.Guild;
 import github.serliunx.delicateguild.entity.Member;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Date;
 import java.util.UUID;
 
 public abstract class AbstractMember implements Member {
@@ -14,6 +15,8 @@ public abstract class AbstractMember implements Member {
     private @Nullable Guild guildBelong;
     private int contributionPoint;
     private Role role;
+
+    private Date joinedDate;
 
     public AbstractMember(UUID uuid, String name, int contributionPoint, @Nullable Guild guildBelong) {
         this.uuid = uuid;
@@ -70,5 +73,14 @@ public abstract class AbstractMember implements Member {
 
     public void setRole(Role role) {
         this.role = guildBelong == null ? null : role;
+    }
+
+    @Nullable
+    public Date getJoinedDate() {
+        return joinedDate;
+    }
+
+    public void setJoinedDate(Date joinedDate) {
+        this.joinedDate = joinedDate;
     }
 }

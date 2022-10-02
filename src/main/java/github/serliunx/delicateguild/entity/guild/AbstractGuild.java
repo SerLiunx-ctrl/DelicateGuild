@@ -1,73 +1,47 @@
 package github.serliunx.delicateguild.entity.guild;
 
-import github.serliunx.delicateguild.entity.member.Member;
+import github.serliunx.delicateguild.DelicateGuild;
+import github.serliunx.delicateguild.entity.Guild;
+import github.serliunx.delicateguild.entity.Member;
 import github.serliunx.delicateguild.entity.member.SimpleMember;
+import github.serliunx.delicateguild.util.StringUtils;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
+import java.security.acl.Owner;
 import java.util.*;
 
-public abstract class AbstractGuild implements Guild{
+public abstract class AbstractGuild implements Guild {
 
-    /**
-     * 公会成员
-     * <li> 包括该工会的所有者
-     */
     private final Set<Member> members;
-
-    /**
-     * 公会所有者
-     */
     @Nullable
     private Member owner;
-
-    /**
-     * 该公会的UUID, 唯一识别码
-     */
-    private final UUID uuid;
-
-    /**
-     * 公会别名
-     */
+    private final String id;
     private String alias;
-
-    /**
-     * 公会点数
-     * <li> 主要用于工会排名
-     */
-    private int points;
-
-    /**
-     * 公会最大允许的成员数量
-     * <li> 大于 0
-     */
-    private int maxMembers;
-
-    /**
-     * 公会存款
-     * <li> 成员可以捐款
-     * <li> 部分成员可以取用存款
-     * <li> .....
-     */
+    private int points, maxMembers, level, expNow;
     private double money;
 
-    public AbstractGuild(Set<Member> members,@Nullable Member owner, UUID uuid, String alias, int points,
-                         double money, int maxMembers) {
+    private Date createDate;
+
+    public AbstractGuild(Set<Member> members,@Nullable Member owner, String id, String alias, int points,
+                         double money, int maxMembers, int level, int expNow) {
         this.members = members;
         this.owner = owner;
-        this.uuid = uuid;
+        this.id = id;
         this.alias = alias;
         this.points = points;
         this.money = money;
-        this.maxMembers = maxMembers;
+        this.maxMembers = maxMembers > 0 ? maxMembers : 5;
+        this.level = Math.max(level, 0);
+        this.expNow = Math.max(expNow, 0);
     }
 
-    public AbstractGuild(Member owner, String alias, int maxMembers){
-        this(new HashSet<>(), owner, UUID.randomUUID(), alias, 0, 0.0, maxMembers);
+    public AbstractGuild(Member owner, String id, int maxMembers){
+        this(new HashSet<>(), owner, id, id, 0, 0.0, maxMembers, 0,0);
     }
 
-    public AbstractGuild(String alias, int maxMembers){
-        this(new HashSet<>(), null, UUID.randomUUID(), alias, 0, 0.0, maxMembers);
+    public AbstractGuild(String id, int maxMembers){
+        this(new HashSet<>(), null, id, id, 0, 0.0, maxMembers, 0, 0);
     }
 
     @Nullable
@@ -77,7 +51,7 @@ public abstract class AbstractGuild implements Guild{
 
     @Override
     public void setOwner(Member member) {
-        this.owner = members.contains(member) ? member : null;
+        this.owner = members.contains(member) ? member : getOwner();
     }
 
     @Override
@@ -152,13 +126,13 @@ public abstract class AbstractGuild implements Guild{
     }
 
     @Override
-    public UUID getUuid() {
-        return uuid;
+    public String getId() {
+        return id;
     }
 
     @Override
     public void addMember(Member member) {
-        if(members.size() > maxMembers){
+        if(members.size() >= maxMembers){
             return;
         }
 
@@ -171,6 +145,74 @@ public abstract class AbstractGuild implements Guild{
 
     @Override
     public void addMember(Player player) {
-        addMember(new SimpleMember(player.getUniqueId(), player.getName()));
+        addMember(new SimpleMember(player.getUniqueId(), player.getName(), 0));
+    }
+
+    @Override
+    public int getLevel() {
+        return level;
+    }
+
+    @Override
+    public void setLevel(int level) {
+        this.level = Math.max(level, 0);
+        countExp();
+    }
+
+    @Override
+    public int getExpNow() {
+        return expNow;
+    }
+
+    @Override
+    public void setExpNow(int expNow) {
+        if(level >= DelicateGuild.getGuildMaxLevel())return;
+        this.expNow = Math.max(expNow, 0);
+        countExp();
+    }
+
+    @Override
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    @Override
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    @Override
+    public void addExp(int exp){
+        if(level >= DelicateGuild.getGuildMaxLevel())return;
+        this.expNow += Math.max(exp, 0);
+        countExp();
+    }
+
+    private void countExp(){
+        List<Integer> expLevelList = DelicateGuild.getInstance().getLevelExpList();
+        if(level >= DelicateGuild.getGuildMaxLevel()) return;
+        while((expNow > expLevelList.get(level))){
+            setLevel(++level);
+            setExpNow(expNow - expLevelList.get(level));
+        }
+    }
+
+    @Override
+    public int getMaxExpToLevelUp(){
+        return DelicateGuild.getInstance().getLevelExpList().get(level);
+    }
+
+    @Override
+    public String toString(){
+        return  "========================" + "\n"
+                + "ID: " + id + "\n"
+                + "Alias: " + alias + "\n"
+                + "Members: " + members.size() + "\n"
+                + "CreateDate: " + StringUtils.formatDate(createDate) + "\n"
+                + "Level: " + level + " (" + expNow +")" + "\n"
+                + "Money: " + money + "\n"
+                + "Points: " + points + "\n"
+                + "Owner: " + (owner == null ? "null" : owner.getName()) + "\n"
+                + "========================";
     }
 }

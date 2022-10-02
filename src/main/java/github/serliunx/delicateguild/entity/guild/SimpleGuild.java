@@ -1,22 +1,21 @@
 package github.serliunx.delicateguild.entity.guild;
 
-import github.serliunx.delicateguild.entity.member.Member;
+import github.serliunx.delicateguild.entity.Member;
 import org.jetbrains.annotations.Nullable;
-
 import java.util.Set;
-import java.util.UUID;
 
 public class SimpleGuild extends AbstractGuild{
 
-    public SimpleGuild(Set<Member> members, @Nullable Member owner, UUID uuid, String alias, int points, double money, int maxMembers) {
-        super(members, owner, uuid, alias, points, money, maxMembers);
+    public SimpleGuild(Set<Member> members, @Nullable Member owner, String id, String alias, int points,
+                       double money, int maxMembers, int level, int expNow) {
+        super(members, owner, id, alias, points, money, maxMembers, level, expNow);
     }
 
-    public SimpleGuild(Member owner, String alias, int maxMembers) {
-        super(owner, alias, maxMembers);
+    public SimpleGuild(Member owner, String id, int maxMembers) {
+        super(owner, id, maxMembers);
     }
 
-    public SimpleGuild(String alias, int maxMembers) {
-        super(alias, maxMembers);
+    public SimpleGuild(String id, int maxMembers) {
+        super(id, maxMembers);
     }
 }

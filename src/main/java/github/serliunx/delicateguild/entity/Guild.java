@@ -1,8 +1,8 @@
-package github.serliunx.delicateguild.entity.guild;
+package github.serliunx.delicateguild.entity;
 
-import github.serliunx.delicateguild.entity.member.Member;
 import org.bukkit.entity.Player;
 
+import java.util.Date;
 import java.util.Set;
 import java.util.UUID;
 
@@ -124,7 +124,7 @@ public interface Guild {
      * 获取该公会的 UUID
      * @return 公会UUID
      */
-    UUID getUuid();
+    String getId();
 
     /**
      * 向该公会添加一名成员
@@ -141,4 +141,56 @@ public interface Guild {
      * @param player 玩家
      */
     void addMember(Player player);
+
+    /**
+     * 获取该公会当前的等级
+     * @return 公会等级
+     */
+    int getLevel();
+
+    /**
+     * 设置当前公会的等级
+     * @param level 公会等级(这个方法可以忽略配置文件中的最大等级限制)
+     */
+    void setLevel(int level);
+
+    /**
+     * 获取该公会当前的经验值
+     * @return 经验值
+     */
+    int getExpNow();
+
+    /**
+     * 设置该公会的经验值
+     * <p>
+     * <li> 会根据最大等级,以及经验增长倍率自动计算公会等级
+     * @param expNow 经验值
+     */
+    void setExpNow(int expNow);
+
+    /**
+     * 添加该公会的经验值
+     * <p>
+     * <li> 会根据最大等级,以及经验增长倍率自动计算公会等级
+     * @param exp 想要添加的经验值
+     */
+    void addExp(int exp);
+
+    /**
+     * 获取该公会创建的日期
+     * @return 创建日期
+     */
+    Date getCreateDate();
+
+    /**
+     * 设置该公会创建的日期
+     * @param createDate 创建日期
+     */
+    void setCreateDate(Date createDate);
+
+    /**
+     * 获取该公会当前等级想要升至下一级所需要的最大经验值
+     * @return 升级所需要的最大经验值
+     */
+    int getMaxExpToLevelUp();
 }

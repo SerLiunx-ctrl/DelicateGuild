@@ -2,6 +2,7 @@ package github.serliunx.delicateguild.entity;
 
 import github.serliunx.delicateguild.allenum.Role;
 
+import java.util.Date;
 import java.util.UUID;
 
 public interface Member {
@@ -69,4 +70,16 @@ public interface Member {
      * @param role 公会角色
      */
     void setRole(Role role);
+
+    /**
+     * 获取该用户加入公会的时间
+     * @return 加入时间
+     */
+    Date getJoinedDate();
+
+    /**
+     * 设置该用户加入公会的时间
+     * @param joinedDate 加入时间
+     */
+    void setJoinedDate(Date joinedDate);
 }

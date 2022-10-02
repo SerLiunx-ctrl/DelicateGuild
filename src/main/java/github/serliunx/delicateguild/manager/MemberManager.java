@@ -6,17 +6,15 @@ import github.serliunx.delicateguild.entity.member.SimpleMember;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public class MemberManager {
 
-    private Set<Member> members;
+    private Map<UUID, Member> members;
     private final DelicateGuild instance;
 
     public MemberManager() {
-        members = new HashSet<>();
+        members = new HashMap<>();
         instance = DelicateGuild.getInstance();
         loadAllMembers();
     }
@@ -26,7 +24,7 @@ public class MemberManager {
      */
     private void loadAllMembers(){
         members = instance.getDataManager().loadAllMembers();
-        instance.getLogger().info(members.size() + " members data has been loaded from database.");
+        instance.getLogger().info(members.size() + " member(s) data has been loaded from database.");
     }
 
     /**
@@ -35,7 +33,7 @@ public class MemberManager {
     public void createMember(Player player){
         if(contain(player)) return;
         Member member = new SimpleMember(player.getUniqueId(), player.getName(), 0);
-        members.add(member);
+        members.put(player.getUniqueId(), member);
 
         //将玩家添加至数据库中
         if(instance.getDataManager().createAnMember(member)){
@@ -61,10 +59,7 @@ public class MemberManager {
      * @return 如已存在则返回真, 否则返回假
      */
     public boolean contain(UUID uuid){
-        for(Member member:members){
-            if(member.getUuid().equals(uuid)) return true;
-        }
-        return false;
+        return members.containsKey(uuid);
     }
 
     /**
@@ -75,9 +70,10 @@ public class MemberManager {
      */
     @Nullable
     public Member getMember(UUID uuid){
-        for(Member member:members){
-            if(member.getUuid().equals(uuid)) return member;
-        }
-        return null;
+        return members.get(uuid);
+    }
+
+    public Map<UUID, Member> getMembers() {
+        return members;
     }
 }
