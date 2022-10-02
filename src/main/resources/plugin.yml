@@ -2,6 +2,7 @@ name: DelicateGuild
 version: '${project.version}'
 main: github.serliunx.delicateguild.DelicateGuild
 authors: [ SerLiunx ]
+softdepend: [PlaceholderAPI]
 description: a guild plugin.
 api-version: 1.17
 commands:
