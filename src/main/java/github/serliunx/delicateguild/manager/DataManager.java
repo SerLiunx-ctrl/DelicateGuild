@@ -254,7 +254,10 @@ public final class DataManager {
                 Member member = instance.getMemberManager().getMember(UUID.fromString(rs.getString(1)));
                 if(member == null) continue;
                 Guild guild = instance.getGuildManager().getById(rs.getString(2));
-                if(guild == null) continue;
+                if(guild == null) {
+                    deleteRecord(relationTable, "PLAYER_UUID", member.getUuid().toString());
+                    continue;
+                }
 
                 guild.addMember(member);
                 SimpleDateFormat dateFormat = new SimpleDateFormat(DEFAULT_DATE_FORMAT);
@@ -275,6 +278,17 @@ public final class DataManager {
 
     }
 
+    public void updateGuild(Guild guild){
+
+    }
+
+    /**
+     * 检查指定记录是否已存在
+     * @param table 表名
+     * @param field 字段名
+     * @param value 值
+     * @return 存在范围真, 否则返回假
+     */
     private boolean exist(String table, String field, String value){
         try(PreparedStatement ps = sql.getConnection().prepareStatement("SELECT * FROM " + table + " WHERE "+ field +"=?")){
             ps.setString(1, value);
@@ -284,5 +298,21 @@ public final class DataManager {
             e.printStackTrace();
         }
         return false;
+    }
+
+    /**
+     *
+     * 删除指定记录
+     * @param table 表名
+     * @param field 字段名
+     * @param value 值
+     */
+    private void deleteRecord(String table, String field, String value){
+        try(PreparedStatement ps = sql.getConnection().prepareStatement("DELETE FROM " + table + " WHERE " + field + "=?")){
+            ps.setString(1, value);
+            ps.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 }
