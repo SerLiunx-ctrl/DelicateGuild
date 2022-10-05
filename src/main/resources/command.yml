@@ -2,6 +2,21 @@ help:
   description: "&a查看帮助."
   syntax: "&e/dguild help <指令>"
   enable: true
+
+guild:
+  description: "&a公会相关指令."
+  syntax: "&e/dguild guild <参数>"
+  enable: true
+  childs:
+    list:
+      description: "&a查看现有公会列表"
+      syntax: "&e/dguild guild list"
+      enable: true
+    create:
+      description: "&a创建一个公会"
+      syntax: "&e/dguild guild create <名称>"
+      enable: true
+
 reload:
   description: "&a重载插件."
   syntax: "&e/dguild reload <参数>"

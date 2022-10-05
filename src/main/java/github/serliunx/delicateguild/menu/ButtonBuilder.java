@@ -39,7 +39,7 @@ public class ButtonBuilder {
             Material material = Material.valueOf(menuFile.getString(name + ".material", "STONE"));
             List<String> descriptions = menuFile.getStringList(name + ".descriptions");
             List<Map<ActionType, String>> actionTypeAndValue = new ArrayList<>();
-            List<String> actions = menuFile.getStringList(name + ".action");
+            List<String> actions = menuFile.getStringList(name + ".actions");
 
             for(String action:actions){
                 if(action.startsWith(ActionType.OPEN_MENU.getValue())){

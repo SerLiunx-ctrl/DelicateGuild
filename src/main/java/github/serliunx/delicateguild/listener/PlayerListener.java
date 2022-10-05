@@ -1,13 +1,14 @@
 package github.serliunx.delicateguild.listener;
 
 import github.serliunx.delicateguild.DelicateGuild;
+import github.serliunx.delicateguild.api.event.menu.MenuClickEvent;
+import github.serliunx.delicateguild.manager.MemberManager;
 import github.serliunx.delicateguild.manager.MenuManager;
-import github.serliunx.delicateguild.menu.Button;
 import github.serliunx.delicateguild.menu.Menu;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
@@ -23,12 +24,13 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event){
-        instance.getMemberManager().createMember(event.getPlayer());
+        MemberManager memberManager = instance.getMemberManager();
+        memberManager.createMember(event.getPlayer());
     }
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event){
-        Menu menu = DelicateGuild.getInstance().getMenuManager().getByInventory(event.getInventory());
+        Menu menu = menuManager.getByInventory(event.getInventory());
         if(menu == null) return;
         if(event.getCurrentItem() == null || event.getCurrentItem().getItemMeta() == null) return;
 
@@ -37,11 +39,19 @@ public class PlayerListener implements Listener {
 
         for(Integer index:menu.getButtons().keySet()){
             if(index == pos){
-                menu.getButtons().get(index).onClick(player);
+                MenuClickEvent menuClickEvent = new MenuClickEvent(player,menu,
+                        menu.getButtons().get(index), pos);
+                Bukkit.getPluginManager().callEvent(menuClickEvent);
+
+                if(!menuClickEvent.isCancelled()){
+                    if(menuClickEvent.getMenu().getButtons().get(menuClickEvent.getSlotClicked()) != null){
+                        menuClickEvent.getMenu().getButtons().get(menuClickEvent.getSlotClicked())
+                                .onClick(menuClickEvent.getPlayer());
+                    }
+                }
                 break;
             }
         }
-
         event.setCancelled(true);
     }
 }

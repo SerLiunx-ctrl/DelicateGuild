@@ -1,5 +1,6 @@
 package github.serliunx.delicateguild.menu.inventory;
 
+import github.serliunx.delicateguild.DelicateGuild;
 import github.serliunx.delicateguild.allenum.ActionType;
 import github.serliunx.delicateguild.menu.AbstractButton;
 import org.bukkit.Material;
@@ -28,11 +29,33 @@ public class InventoryButton extends AbstractButton {
     @Override
     public void onClick(Player player) {
         if(actionTypeAndValue.isEmpty()) return;
-        player.playSound(player.getLocation(), Sound.BLOCK_METAL_BREAK,2,2);
-        player.closeInventory();
+        for(Map<ActionType, String> atv: actionTypeAndValue){
+            for(ActionType type:atv.keySet()){
+                switch (type){
+                    case PLAY_SOUND:
+                        playSound(player,atv.get(type));
+                        break;
+                    case RUN_COMMAND:
+                        player.performCommand(atv.get(type));
+                        break;
+                    case OPEN_MENU:
+                        break;
+                    default:
+                        player.closeInventory();
+                }
+            }
+        }
     }
 
-    private void playSound(){
-
+    private void playSound(Player player, String value){
+        try{
+            String[] v = value.split("-");
+            Sound sound = Sound.valueOf(v[0]);
+            int volume = Integer.parseInt(v[1]);
+            int pitch = Integer.parseInt(v[2]);
+            player.playSound(player.getLocation(), sound, volume, pitch);
+        }catch (Exception e){
+            DelicateGuild.getInstance().getLogger().info("sound error! ");
+        }
     }
 }

@@ -5,7 +5,6 @@ import github.serliunx.delicateguild.allenum.GUISize;
 import github.serliunx.delicateguild.menu.Button;
 import github.serliunx.delicateguild.menu.ButtonBuilder;
 import github.serliunx.delicateguild.menu.Menu;
-import github.serliunx.delicateguild.menu.inventory.InventoryButton;
 import github.serliunx.delicateguild.menu.inventory.InventoryMenu;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.Inventory;

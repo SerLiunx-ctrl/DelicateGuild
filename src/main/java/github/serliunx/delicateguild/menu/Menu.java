@@ -10,6 +10,7 @@ import java.util.Map;
 
 public interface Menu{
     void show(Player player);
+    void show(Player player, boolean keepPage);
     String getTitle();
     void setTitle(String title);
     String getId();
@@ -17,6 +18,7 @@ public interface Menu{
     void setSize(GUISize size);
     Map<Integer, Button> getButtons();
     void addButton(int index, Button button);
+    void removeButton(int index);
 
     /**
      * <li>构建一个菜单

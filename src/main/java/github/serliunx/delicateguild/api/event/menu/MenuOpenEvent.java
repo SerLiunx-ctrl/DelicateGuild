@@ -1,27 +1,20 @@
 package github.serliunx.delicateguild.api.event.menu;
 
-import github.serliunx.delicateguild.menu.Button;
 import github.serliunx.delicateguild.menu.Menu;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 
-public class MenuClickEvent extends MenuEvent implements Cancellable {
+public class MenuOpenEvent extends MenuEvent implements Cancellable {
 
     private static final HandlerList handlers = new HandlerList();
-
     private boolean cancelled = false;
+    private boolean keepPage = false;
 
-    private final Button button;
-
-    private final int slotClicked;
-
-    public MenuClickEvent(@NotNull Player who, @NotNull Menu menu, @NotNull Button button,
-                          int slotClicked) {
+    public MenuOpenEvent(@NotNull Player who, @NotNull Menu menu, boolean keepPage) {
         super(who, menu);
-        this.button = button;
-        this.slotClicked = slotClicked;
+        this.keepPage = keepPage;
     }
 
     @Override
@@ -31,7 +24,7 @@ public class MenuClickEvent extends MenuEvent implements Cancellable {
 
     @Override
     public void setCancelled(boolean cancel) {
-        this.cancelled = cancel;
+        this.cancelled =cancel;
     }
 
     @NotNull
@@ -44,19 +37,7 @@ public class MenuClickEvent extends MenuEvent implements Cancellable {
         return handlers;
     }
 
-    /**
-     * 获取触发该事件时所对应的按钮
-     * @return 按钮
-     */
-    public Button getButton() {
-        return button;
-    }
-
-    /**
-     * 获取点击时的位置
-     * @return 位置 (0~53)
-     */
-    public int getSlotClicked() {
-        return slotClicked;
+    public boolean isKeepPage() {
+        return keepPage;
     }
 }

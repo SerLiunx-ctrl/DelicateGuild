@@ -33,8 +33,8 @@ public abstract class AbstractGuild implements Guild {
         this.maxMembers = maxMembers > 0 ? maxMembers : 5;
         this.level = Math.max(level, 0);
         this.expNow = Math.max(expNow, 0);
-
-        addMember(owner);
+        if(owner != null)
+            addMember(owner);
     }
 
     public AbstractGuild(Member owner, String id, int maxMembers){

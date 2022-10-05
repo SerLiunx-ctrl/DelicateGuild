@@ -144,17 +144,12 @@ public class GuildManager {
     public List<Guild> getReorderedPage(int pageSize, int page){
         if(pageSize >= guildTopList.size()) return guildTopList;
         guildPagination(pageSize);
-        if(!checkPageRange(page)) return guildPages.get(0);
-        return guildPages.get(page);
+        return (page < guildPages.size() && page >= 0)
+                ? guildPages.get(page) : guildPages.get(0);
     }
 
-    /**
-     * 检查指定页码的公会列表是否存在.
-     * <li> 注意: 页码从 0 开始为第一页
-     * @param page 页码
-     * @return 存在返回真, 否则返回假
-     */
-    public boolean checkPageRange(int page){
-        return page < (guildPages.size() + 1);
+    public int getReorderedPageSize(int pageSize){
+        guildPagination(pageSize);
+        return guildPages.size();
     }
 }

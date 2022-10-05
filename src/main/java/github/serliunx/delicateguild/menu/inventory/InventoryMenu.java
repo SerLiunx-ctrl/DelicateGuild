@@ -1,7 +1,9 @@
 package github.serliunx.delicateguild.menu.inventory;
 
 import github.serliunx.delicateguild.allenum.GUISize;
+import github.serliunx.delicateguild.api.event.menu.MenuOpenEvent;
 import github.serliunx.delicateguild.menu.AbstractMenu;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 public class InventoryMenu extends AbstractMenu {
@@ -12,7 +14,15 @@ public class InventoryMenu extends AbstractMenu {
 
     @Override
     public void show(Player player) {
-        create(player);
-        player.openInventory(getInventory());
+        show(player, false);
+    }
+
+    @Override
+    public void show(Player player, boolean keepPage){
+        MenuOpenEvent menuOpenEvent = new MenuOpenEvent(player, this, keepPage);
+        Bukkit.getPluginManager().callEvent(menuOpenEvent);
+        if(menuOpenEvent.isCancelled()) return;
+        create(menuOpenEvent.getPlayer());
+        player.openInventory(menuOpenEvent.getMenu().getInventory());
     }
 }

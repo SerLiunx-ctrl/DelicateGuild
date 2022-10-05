@@ -1,5 +1,6 @@
 package github.serliunx.delicateguild.command;
 
+import github.serliunx.delicateguild.DelicateGuild;
 import github.serliunx.delicateguild.manager.CooldownProvider;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
@@ -21,6 +22,8 @@ public abstract class Command {
     private final long cooldownInSeconds;
     private CooldownProvider<CommandSender> cooldownProvider;
 
+    protected final DelicateGuild instance;
+
     /**
      *
      * @param aliases 指令别名.
@@ -39,6 +42,8 @@ public abstract class Command {
         this.isForPlayer = onlyForPlayer;
         this.enabled = true;
         this.cooldownInSeconds = cooldown.getSeconds();
+
+        instance = DelicateGuild.getInstance();
     }
 
     public CooldownProvider<CommandSender> getCooldownProvider() {

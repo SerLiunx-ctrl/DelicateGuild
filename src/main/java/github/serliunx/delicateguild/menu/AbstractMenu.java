@@ -1,16 +1,16 @@
 package github.serliunx.delicateguild.menu;
 
 import github.serliunx.delicateguild.allenum.GUISize;
+import github.serliunx.delicateguild.placeholder.DelicateGuildHolder;
 import github.serliunx.delicateguild.util.StringUtils;
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public abstract class AbstractMenu implements Menu{
 
@@ -68,11 +68,25 @@ public abstract class AbstractMenu implements Menu{
         buttons.put(index, button);
     }
 
+    public void removeButton(int index){
+        buttons.remove(index);
+    }
+
     @Override
     public void create(Player player) {
-        this.inventory = Bukkit.createInventory(inventoryHolder, size, StringUtils.Color(title));
+        this.inventory = Bukkit.createInventory(inventoryHolder, size, StringUtils.Color(
+                DelicateGuildHolder.setPlaceholders(player, title)
+        ));
 
         for(Integer index:buttons.keySet()){
+            List<String> descriptions = new ArrayList<>();
+            for(String s:buttons.get(index).getDescriptions()){
+                descriptions.add(StringUtils.Color(DelicateGuildHolder.setPlaceholders(player, s)));
+            }
+            buttons.get(index).setDescriptions(descriptions);
+            buttons.get(index).setTitle(StringUtils.Color(DelicateGuildHolder.setPlaceholders(player,
+                    buttons.get(index).getTitle())));
+
             this.inventory.setItem(index, buttons.get(index).getItem());
         }
     }
