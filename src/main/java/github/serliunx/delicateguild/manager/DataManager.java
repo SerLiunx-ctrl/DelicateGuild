@@ -282,6 +282,10 @@ public final class DataManager {
 
     }
 
+    public void playerLeaveGuild(Player player){
+        deleteRecord(relationTable, "PLAYER_UUID", player.getUniqueId().toString());
+    }
+
     /**
      * 检查指定记录是否已存在
      * @param table 表名

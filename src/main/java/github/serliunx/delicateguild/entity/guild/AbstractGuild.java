@@ -1,10 +1,12 @@
 package github.serliunx.delicateguild.entity.guild;
 
 import github.serliunx.delicateguild.DelicateGuild;
+import github.serliunx.delicateguild.allenum.Role;
 import github.serliunx.delicateguild.entity.Guild;
 import github.serliunx.delicateguild.entity.Member;
 import github.serliunx.delicateguild.entity.member.SimpleMember;
 import github.serliunx.delicateguild.util.StringUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
@@ -19,8 +21,8 @@ public abstract class AbstractGuild implements Guild {
     private String alias;
     private int points, maxMembers, level, expNow;
     private double money;
-
     private Date createDate;
+    private final Set<Player> playerApplications;
 
     public AbstractGuild(Set<Member> members,@Nullable Member owner, String id, String alias, int points,
                          double money, int maxMembers, int level, int expNow) {
@@ -35,6 +37,8 @@ public abstract class AbstractGuild implements Guild {
         this.expNow = Math.max(expNow, 0);
         if(owner != null)
             addMember(owner);
+        playerApplications = new HashSet<>();
+
     }
 
     public AbstractGuild(Member owner, String id, int maxMembers){
@@ -150,6 +154,12 @@ public abstract class AbstractGuild implements Guild {
     }
 
     @Override
+    public void removeMember(Member member){
+        members.remove(member);
+        member.setGuildBelong(null);
+    }
+
+    @Override
     public int getLevel() {
         return level;
     }
@@ -189,6 +199,42 @@ public abstract class AbstractGuild implements Guild {
         countExp();
     }
 
+    @Override
+    public int getMaxExpToLevelUp(){
+        return DelicateGuild.getInstance().getLevelExpList().get(level);
+    }
+
+    @Override
+    public void addAnApplication(Player player){
+        this.playerApplications.add(player);
+        notifyAllAdministrators(StringUtils.Color(
+                "&aPlayer &e{player} &aapplied to join guild! Use command &b/dguild guild accept &e{player} &ato accept/reject the request"
+                        .replace("{player}",player.getName())
+        ));
+    }
+
+    @Override
+    public Set<Player> getPlayerApplications() {
+        return this.playerApplications;
+    }
+
+    @Override
+    public boolean isAnAdministrator(Member member){
+        if(!members.contains(member) || member.getGuildBelong() == null
+                || member.getGuildBelong() != this) return false;
+        return member.getRole() == Role.CO_OWNER && member.getRole() == Role.OWNER;
+    }
+
+    private void notifyAllAdministrators(String message){
+        for (Member member: members){
+            if(member.getRole() == Role.OWNER || member.getRole() == Role.CO_OWNER){
+                Player player = Bukkit.getPlayer(member.getUuid());
+                if(player == null || !player.isOnline()) continue;
+                player.sendMessage(message);
+            }
+        }
+    }
+
     private void countExp(){
         List<Integer> expLevelList = DelicateGuild.getInstance().getLevelExpList();
         if(level >= DelicateGuild.getGuildMaxLevel()) return;
@@ -196,11 +242,6 @@ public abstract class AbstractGuild implements Guild {
             setLevel(++level);
             setExpNow(expNow - expLevelList.get(level));
         }
-    }
-
-    @Override
-    public int getMaxExpToLevelUp(){
-        return DelicateGuild.getInstance().getLevelExpList().get(level);
     }
 
     @Override

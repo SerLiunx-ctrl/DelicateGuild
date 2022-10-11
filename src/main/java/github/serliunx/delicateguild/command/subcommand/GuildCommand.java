@@ -1,8 +1,7 @@
 package github.serliunx.delicateguild.command.subcommand;
 
 import github.serliunx.delicateguild.command.Command;
-import github.serliunx.delicateguild.command.subcommand.guild.CreateCommand;
-import github.serliunx.delicateguild.command.subcommand.guild.ListCommand;
+import github.serliunx.delicateguild.command.subcommand.guild.*;
 import org.bukkit.command.CommandSender;
 import java.time.Duration;
 import java.util.ArrayList;
@@ -11,7 +10,7 @@ import java.util.List;
 
 public class GuildCommand extends Command {
 
-    public Command listCommand, createCommand;
+    public Command listCommand, createCommand, joinCommand, acceptCommand, quitCommand;
 
     public GuildCommand() {
         super(Collections.singletonList("guild"), "command about guild", "/dguild guild",
@@ -19,13 +18,19 @@ public class GuildCommand extends Command {
 
         listCommand = new ListCommand();
         createCommand = new CreateCommand();
+        joinCommand = new JoinCommand();
+        acceptCommand = new AcceptCommand();
+        quitCommand = new QuitCommand();
 
-        addChilds(listCommand, createCommand);
+        addChilds(listCommand, createCommand, joinCommand, acceptCommand, quitCommand);
     }
 
     @Override
     public boolean execute(CommandSender sender, String[] arguments) {
-        return false;
+        if(arguments.length < 2){
+            showAllChildSyntax(sender);
+        }
+        return true;
     }
 
     @Override

@@ -142,6 +142,8 @@ public interface Guild {
      */
     void addMember(Player player);
 
+    void removeMember(Member member);
+
     /**
      * 获取该公会当前的等级
      * @return 公会等级
@@ -193,4 +195,23 @@ public interface Guild {
      * @return 升级所需要的最大经验值
      */
     int getMaxExpToLevelUp();
+
+    /**
+     * 添加一个用户到当前公会的申请列表中
+     * @param player 指定玩家
+     */
+    void addAnApplication(Player player);
+
+    /**
+     * 获取该公会的申请列表
+     * @return 申请列表(玩家)
+     */
+    Set<Player> getPlayerApplications();
+
+    /**
+     * 检查指定成员是否属于该公会的管理人员(即会长和副会长)
+     * @param member 成员
+     * @return 属于管理人员返回真, 否则返回假
+     */
+    boolean isAnAdministrator(Member member);
 }

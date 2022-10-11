@@ -16,7 +16,14 @@ guild:
       description: "&a创建一个公会"
       syntax: "&e/dguild guild create <名称>"
       enable: true
-
+    join:
+      description: "&a申请加入一个公会"
+      syntax: "&e/dguild guild join <名称>"
+      enable: true
+    accept:
+      description: "&a同意一个玩家的加入请求"
+      syntax: "&e/dguild guild accept <玩家名称>"
+      enable: true
 reload:
   description: "&a重载插件."
   syntax: "&e/dguild reload <参数>"

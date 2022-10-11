@@ -2,6 +2,7 @@ package github.serliunx.delicateguild.command;
 
 import github.serliunx.delicateguild.DelicateGuild;
 import github.serliunx.delicateguild.manager.CooldownProvider;
+import github.serliunx.delicateguild.util.StringUtils;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 import java.time.Duration;
@@ -109,6 +110,19 @@ public abstract class Command {
 
     public void setChild(int index,Command command){
         childs.set(index, command);
+    }
+
+    public void showAllChildSyntax(CommandSender sender){
+        if(getChilds().isEmpty())return;
+        sender.sendMessage(StringUtils.Color("&a可用子命令:"));
+        for(Command c:getChilds()){
+            sender.sendMessage(StringUtils.Color(c.getSyntax() + " - " + c.getDescription()));
+        }
+    }
+
+    public void showSyntax(CommandSender sender){
+        sender.sendMessage(StringUtils.Color("&a用法: "));
+        sender.sendMessage(StringUtils.Color(syntax + " - " + description));
     }
 
     /**

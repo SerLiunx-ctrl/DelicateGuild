@@ -18,6 +18,10 @@ public class CreateCommand extends Command {
     }
 
     public boolean execute(CommandSender sender, String[] arguments) {
+        if(arguments.length != 3){
+            showSyntax(sender);
+            return true;
+        }
         if(DelicateGuild.getInstance().getGuildManager().contain(arguments[2])){
             sender.sendMessage(arguments[2] + " already exist.");
             return true;

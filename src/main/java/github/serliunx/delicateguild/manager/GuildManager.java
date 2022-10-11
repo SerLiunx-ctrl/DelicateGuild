@@ -2,8 +2,13 @@ package github.serliunx.delicateguild.manager;
 
 import github.serliunx.delicateguild.DelicateGuild;
 import github.serliunx.delicateguild.allenum.Role;
+import github.serliunx.delicateguild.api.event.guild.GuildCreateEvent;
+import github.serliunx.delicateguild.api.event.guild.GuildJoinEvent;
 import github.serliunx.delicateguild.entity.Guild;
+import github.serliunx.delicateguild.entity.Member;
 import github.serliunx.delicateguild.entity.guild.SimpleGuild;
+import github.serliunx.delicateguild.util.StringUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 import java.util.*;
@@ -69,14 +74,17 @@ public class GuildManager {
     public boolean createGuild(String id, @Nullable Player player){
         if(contain(id)) return false;
         Guild guild;
-        if(player == null){
-            guild = new SimpleGuild(id, 5);
-        }else {
+        if(player != null){
             guild = new SimpleGuild(instance.getMemberManager().getMember(player.getUniqueId()),
                     id, 5);
             guild.setCreateDate(new java.util.Date());
-
             instance.getDataManager().createRelation(guild, player, Role.OWNER);
+            GuildCreateEvent guildCreateEvent = new GuildCreateEvent(player, guild);
+            Bukkit.getPluginManager().callEvent(guildCreateEvent);
+            if(guildCreateEvent.isCancelled())return false;
+        }else {
+            guild = new SimpleGuild(id, 5);
+            guild.setCreateDate(new java.util.Date());
         }
         guilds.put(id, guild);
         if(instance.getDataManager().createAnGuild(guild)){
@@ -151,5 +159,35 @@ public class GuildManager {
     public int getReorderedPageSize(int pageSize){
         guildPagination(pageSize);
         return guildPages.size();
+    }
+
+    public void joinGuild(Guild targetGuild, Player theMember, Player operator){
+        String message = StringUtils.Color("&aPlayer &e" + theMember.getName() + " &ajoined guild!");
+        GuildJoinEvent guildJoinEvent = new GuildJoinEvent(theMember, targetGuild, operator, message);
+        Bukkit.getPluginManager().callEvent(guildJoinEvent);
+        if(guildJoinEvent.isCancelled()) return;
+        Member member = instance.getMemberManager().getMember(guildJoinEvent.getPlayer().getUniqueId());
+        guildJoinEvent.getGuild().addMember(member);
+        instance.getDataManager().createRelation(guildJoinEvent.getGuild(), guildJoinEvent.getPlayer());
+        for(Member m:guildJoinEvent.getGuild().getMembers()){
+            Player player = Bukkit.getPlayer(m.getUuid());
+            if(player != null && player.isOnline()){
+                player.sendMessage(message);
+            }
+        }
+    }
+
+    public void quitGuild(Guild targetGuild, Player player){
+        String message = StringUtils.Color("&cPlayer &e" + player.getName() + " &cleave guild!");
+        Member member = instance.getMemberManager().getMember(player.getUniqueId());
+        targetGuild.removeMember(member);
+        instance.getDataManager().playerLeaveGuild(player);
+        player.sendMessage(StringUtils.Color("&eYou quit guild: &d" + targetGuild.getId()));
+        for(Member m:targetGuild.getMembers()){
+            Player p = Bukkit.getPlayer(m.getUuid());
+            if(p != null && p.isOnline()){
+                p.sendMessage(message);
+            }
+        }
     }
 }
