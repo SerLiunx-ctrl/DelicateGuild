@@ -1,0 +1,15 @@
+id: "guildmenu"
+title: "&#4a3513公会 {guild_name}"
+size: "SIX_ROWS"
+buttons:
+  - "button_player_stats"
+
+button_player_stats:
+  title: "&#b83563%player_name%"
+  material: "PAPER"
+  pos: 4
+  descriptions:
+    - ""
+    - "&e加入时间: &7{player_join_date}"
+    - "&e贡献值: &7{player_contributionPoint}"
+    - "&e职位: &7{player_role}"

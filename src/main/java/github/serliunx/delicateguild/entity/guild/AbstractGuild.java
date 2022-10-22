@@ -222,7 +222,7 @@ public abstract class AbstractGuild implements Guild {
     public boolean isAnAdministrator(Member member){
         if(!members.contains(member) || member.getGuildBelong() == null
                 || member.getGuildBelong() != this) return false;
-        return member.getRole() == Role.CO_OWNER && member.getRole() == Role.OWNER;
+        return member.getRole() == Role.CO_OWNER || member.getRole() == Role.OWNER;
     }
 
     private void notifyAllAdministrators(String message){

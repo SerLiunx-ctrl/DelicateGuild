@@ -14,7 +14,7 @@ import java.util.*;
 public class MenuManager {
 
     private final Map<String, Menu> menus;
-    private final List<String> menuNames = Arrays.asList("main_menu");
+    private final List<String> menuNames = Arrays.asList("main_menu", "guild_menu");
 
     public MenuManager() {
         menus = new HashMap<>();
@@ -50,7 +50,7 @@ public class MenuManager {
 
     public Menu getByInventory(Inventory inventory){
         for(Menu menu:menus.values()){
-            if(menu.getInventory() == null) break;
+            if(menu.getInventory() == null) continue;
             if(menu.getInventory().equals(inventory)) return menu;
         }
         return null;

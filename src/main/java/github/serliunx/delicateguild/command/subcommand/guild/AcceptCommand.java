@@ -4,6 +4,7 @@ import github.serliunx.delicateguild.allenum.Role;
 import github.serliunx.delicateguild.command.Command;
 import github.serliunx.delicateguild.entity.Guild;
 import github.serliunx.delicateguild.entity.Member;
+import github.serliunx.delicateguild.manager.GuildController;
 import github.serliunx.delicateguild.util.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -35,11 +36,8 @@ public class AcceptCommand extends Command {
             sender.sendMessage(StringUtils.Color("&cplease join a guild before do that."));
             return true;
         }
-        if(!(member.getRole() == Role.OWNER || member.getRole() == Role.CO_OWNER)){
-            sender.sendMessage(StringUtils.Color("&cyou do not have permission to do that!"));
+        if(!GuildController.isAdministrator(member, guild, true))
             return true;
-        }
-
         if(arguments.length == 2){
             sender.sendMessage(StringUtils.Color("&aAll applications:"));
             for(Player p:guild.getPlayerApplications()){
@@ -71,12 +69,6 @@ public class AcceptCommand extends Command {
         if (!(commandSender instanceof Player)) return Collections.emptyList();
         Member member = instance.getMemberManager().getMember(((Player) commandSender).getUniqueId());
         if(member == null) return Collections.emptyList();
-        if(!(member.getRole() == Role.CO_OWNER || member.getRole() == Role.OWNER)) return Collections.emptyList();
-        Guild guild = member.getGuildBelong();
-        if(guild == null) return Collections.emptyList();
-        List<String> playerName = new ArrayList<>();
-        for(Player player:guild.getPlayerApplications())
-            playerName.add(player.getName());
-        return playerName;
+        return GuildController.getApplicationList(member, member.getGuildBelong());
     }
 }

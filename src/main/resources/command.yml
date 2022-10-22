@@ -1,13 +1,18 @@
+#命令语言文件
+#此处并不能新定义命令. 只能设置指定命令的状态, 如禁用指定命令
 help:
   description: "&a查看帮助."
   syntax: "&e/dguild help <指令>"
   enable: true
 
+#二级命令
 guild:
   description: "&a公会相关指令."
   syntax: "&e/dguild guild <参数>"
   enable: true
+  #子命令
   childs:
+    #三级命令
     list:
       description: "&a查看现有公会列表"
       syntax: "&e/dguild guild list"
@@ -24,6 +29,19 @@ guild:
       description: "&a同意一个玩家的加入请求"
       syntax: "&e/dguild guild accept <玩家名称>"
       enable: true
+    quit:
+      description: "&a离开当前公会"
+      syntax: "&e/dguild guild quit"
+      enable: true
+    deny:
+      description: "&a拒绝一个玩家的加入请求"
+      syntax: "&e/dguild guild deny <玩家名称>"
+      enable: true
+    name:
+      description: "&a修改公会名称"
+      syntax: "&e/dguild guild name <新名称>"
+      enable: true
+
 reload:
   description: "&a重载插件."
   syntax: "&e/dguild reload <参数>"

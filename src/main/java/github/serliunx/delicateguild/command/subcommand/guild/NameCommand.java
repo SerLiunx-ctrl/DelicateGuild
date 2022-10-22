@@ -3,6 +3,7 @@ package github.serliunx.delicateguild.command.subcommand.guild;
 import github.serliunx.delicateguild.command.Command;
 import github.serliunx.delicateguild.entity.Guild;
 import github.serliunx.delicateguild.entity.Member;
+import github.serliunx.delicateguild.manager.GuildController;
 import github.serliunx.delicateguild.util.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -36,15 +37,8 @@ public class NameCommand extends Command {
             sender.sendMessage(StringUtils.Color("&cyou do not have permission to do that!"));
             return true;
         }
-        guild.setAlias(arguments[2]);
+        GuildController.changeGuildName(guild, player, arguments[2]);
         sender.sendMessage(StringUtils.Color("&ename changed to: &r" + arguments[2]));
-        for(Member m:guild.getMembers()){
-            Player p = Bukkit.getPlayer(m.getUuid());
-            if(p != null && p.isOnline()){
-                p.sendMessage(StringUtils.Color("&ename changed to:&r " + arguments[2] + " &r&eby &b" + player.getName()));
-            }
-        }
-
         return true;
     }
 

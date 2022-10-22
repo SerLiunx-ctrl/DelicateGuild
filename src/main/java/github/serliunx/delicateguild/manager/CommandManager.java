@@ -4,6 +4,7 @@ import github.serliunx.delicateguild.DelicateGuild;
 import github.serliunx.delicateguild.allenum.YamlFiles;
 import github.serliunx.delicateguild.command.Command;
 import github.serliunx.delicateguild.command.Commands;
+import github.serliunx.delicateguild.entity.Member;
 import github.serliunx.delicateguild.util.StringUtils;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -83,7 +84,15 @@ public class CommandManager implements CommandExecutor, TabCompleter {
         if(args.length == 0){
             if(commandSender instanceof Player){
                 Player player = (Player)commandSender;
-                DelicateGuild.getInstance().getMenuManager().getById("mainmenu").show(player);
+                Member member = DelicateGuild.getInstance().getMemberManager().getMember(player.getUniqueId());
+                if(member != null){
+                    if(member.getGuildBelong() != null){
+                        DelicateGuild.getInstance().getMenuManager().getById("guildmenu").show(player);
+                    }else {
+                        DelicateGuild.getInstance().getMenuManager().getById("mainmenu").show(player);
+                    }
+                }
+
             }else{
                 DelicateGuild.getInstance().getCommands().helpCommand.execute(commandSender,new String[]{});
             }

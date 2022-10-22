@@ -21,6 +21,7 @@ public class ConfigManager {
         yamlFileConfigMap.put(YamlFiles.YAML_LANGUAGE.getValue(), new YamlFileConfig("lang.yml"));
         yamlFileConfigMap.put(YamlFiles.YAML_COMMAND.getValue(), new YamlFileConfig("command.yml"));
         yamlFileConfigMap.put("main_menu", new MenuFile("main_menu.yml"));
+        yamlFileConfigMap.put("guild_menu", new MenuFile("guild_menu.yml"));
     }
 
     public YamlFile getByConfigName(String name){

@@ -4,6 +4,7 @@ import github.serliunx.delicateguild.allenum.Role;
 import github.serliunx.delicateguild.command.Command;
 import github.serliunx.delicateguild.entity.Guild;
 import github.serliunx.delicateguild.entity.Member;
+import github.serliunx.delicateguild.manager.GuildController;
 import github.serliunx.delicateguild.util.StringUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -28,10 +29,8 @@ public class QuitCommand extends Command {
         Member member = instance.getMemberManager().getMember(player.getUniqueId());
         if(member == null) return true;
         Guild guild = member.getGuildBelong();
-        if(guild == null){
-            sender.sendMessage(StringUtils.Color("&cYou do not join a guild!"));
+        if(!GuildController.isInTheGuild(member, guild, true))
             return true;
-        }
         if(guild.getOwner().equals(member) && member.getRole() == Role.OWNER){
             sender.sendMessage(StringUtils.Color("&cYow owned this guild! so you cannot quit this guild!"));
             return true;
