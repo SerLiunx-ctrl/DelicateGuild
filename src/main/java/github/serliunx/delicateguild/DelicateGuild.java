@@ -29,6 +29,8 @@ public final class DelicateGuild extends JavaPlugin {
     private MenuManager menuManager;
     private PlaceholderAdapter placeholderAdapter;
 
+    private DriverManager driverManager;
+
     /**
      * 公会升级所需经验较前一级别所需要的倍率
      *
@@ -89,11 +91,7 @@ public final class DelicateGuild extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        try{
-            getDataManager().getSql().getConnection().close();
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
+        driverManager.getDriver().disConnect();
     }
 
     private void createInstance(){
@@ -102,6 +100,7 @@ public final class DelicateGuild extends JavaPlugin {
         getProperties();
         commandManager = new CommandManager(COMMAND);
         language = new Language();
+        driverManager = new DriverManager();
         dataManager = new DataManager();
         memberManager = new MemberManager();
         guildManager = new GuildManager();
@@ -160,6 +159,10 @@ public final class DelicateGuild extends JavaPlugin {
 
     public PlaceholderAdapter getPlaceholderAdapter() {
         return placeholderAdapter;
+    }
+
+    public DriverManager getDriverManager() {
+        return driverManager;
     }
 
     public boolean isUsePapi() {
