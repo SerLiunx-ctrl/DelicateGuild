@@ -2,7 +2,6 @@ package github.serliunx.delicateguild;
 
 import github.serliunx.delicateguild.command.Commands;
 import github.serliunx.delicateguild.listener.GuildListener;
-import github.serliunx.delicateguild.listener.MenuListener;
 import github.serliunx.delicateguild.listener.PlayerListener;
 import github.serliunx.delicateguild.manager.*;
 import github.serliunx.delicateguild.placeholder.DelicateGuildExpansion;
@@ -11,7 +10,6 @@ import github.serliunx.delicateguild.util.Language;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +24,6 @@ public final class DelicateGuild extends JavaPlugin {
     private DataManager dataManager;
     private MemberManager memberManager;
     private GuildManager guildManager;
-    private MenuManager menuManager;
     private PlaceholderAdapter placeholderAdapter;
 
     private DriverManager driverManager;
@@ -71,7 +68,6 @@ public final class DelicateGuild extends JavaPlugin {
 
         //事件监听器注册
         Bukkit.getPluginManager().registerEvents(new PlayerListener(this), this);
-        Bukkit.getPluginManager().registerEvents(new MenuListener(this), this);
         Bukkit.getPluginManager().registerEvents(new GuildListener(this), this);
 
         //(必须/非必须)前置插件检测
@@ -106,7 +102,6 @@ public final class DelicateGuild extends JavaPlugin {
         guildManager = new GuildManager();
         getLogger().info(getDataManager().loadRelation() +
                 " available relation(s) has been loaded from database.");
-        menuManager = new MenuManager();
         placeholderAdapter = new PlaceholderAdapter();
     }
 
@@ -151,10 +146,6 @@ public final class DelicateGuild extends JavaPlugin {
 
     public DataManager getDataManager() {
         return dataManager;
-    }
-
-    public MenuManager getMenuManager() {
-        return menuManager;
     }
 
     public PlaceholderAdapter getPlaceholderAdapter() {

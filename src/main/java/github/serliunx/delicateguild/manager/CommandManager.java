@@ -85,13 +85,6 @@ public class CommandManager implements CommandExecutor, TabCompleter {
             if(commandSender instanceof Player){
                 Player player = (Player)commandSender;
                 Member member = DelicateGuild.getInstance().getMemberManager().getMember(player.getUniqueId());
-                if(member != null){
-                    if(member.getGuildBelong() != null){
-                        DelicateGuild.getInstance().getMenuManager().getById("guildmenu").show(player);
-                    }else {
-                        DelicateGuild.getInstance().getMenuManager().getById("mainmenu").show(player);
-                    }
-                }
 
             }else{
                 DelicateGuild.getInstance().getCommands().helpCommand.execute(commandSender,new String[]{});
