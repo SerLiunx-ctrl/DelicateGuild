@@ -85,7 +85,11 @@ public class CommandManager implements CommandExecutor, TabCompleter {
             if(commandSender instanceof Player){
                 Player player = (Player)commandSender;
                 Member member = DelicateGuild.getInstance().getMemberManager().getMember(player.getUniqueId());
-
+                if(member != null && member.getGuildBelong() != null){
+                    player.sendMessage(StringUtils.Color(member.getGuildBelong().toString()));
+                }else {
+                    player.sendMessage(StringUtils.Color("&eplease use &d/dg guild join &efor join a guild."));
+                }
             }else{
                 DelicateGuild.getInstance().getCommands().helpCommand.execute(commandSender,new String[]{});
             }

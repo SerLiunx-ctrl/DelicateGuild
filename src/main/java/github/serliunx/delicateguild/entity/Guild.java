@@ -1,5 +1,6 @@
 package github.serliunx.delicateguild.entity;
 
+import github.serliunx.delicateguild.allenum.Role;
 import org.bukkit.entity.Player;
 
 import java.util.Date;
@@ -142,6 +143,13 @@ public interface Guild {
      */
     void addMember(Player player);
 
+    /**
+     * 向该公会添加一名成员
+     * @param member 成员
+     * @param role 指定角色
+     */
+    void addMember(Member member, Role role);
+
     void removeMember(Member member);
 
     /**
@@ -201,6 +209,8 @@ public interface Guild {
      * @param player 指定玩家
      */
     void addAnApplication(Player player);
+
+    void removeAnApplication(Player player);
 
     /**
      * 获取该公会的申请列表

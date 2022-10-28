@@ -75,13 +75,10 @@ public class GuildManager {
         if(contain(id)) return false;
         Guild guild;
         if(player != null){
-            guild = new SimpleGuild(instance.getMemberManager().getMember(player.getUniqueId()),
-                    id, 5);
+            Member member = instance.getMemberManager().getMember(player.getUniqueId());
+            guild = new SimpleGuild(member, id, 5);
             guild.setCreateDate(new java.util.Date());
             instance.getDataManager().createRelation(guild, player, Role.OWNER);
-            GuildCreateEvent guildCreateEvent = new GuildCreateEvent(player, guild);
-            Bukkit.getPluginManager().callEvent(guildCreateEvent);
-            if(guildCreateEvent.isCancelled())return false;
         }else {
             guild = new SimpleGuild(id, 5);
             guild.setCreateDate(new java.util.Date());
@@ -168,6 +165,7 @@ public class GuildManager {
         if(guildJoinEvent.isCancelled()) return;
         Member member = instance.getMemberManager().getMember(guildJoinEvent.getPlayer().getUniqueId());
         guildJoinEvent.getGuild().addMember(member);
+        guildJoinEvent.getGuild().removeAnApplication(theMember);
         instance.getDataManager().createRelation(guildJoinEvent.getGuild(), guildJoinEvent.getPlayer());
         for(Member m:guildJoinEvent.getGuild().getMembers()){
             Player player = Bukkit.getPlayer(m.getUuid());

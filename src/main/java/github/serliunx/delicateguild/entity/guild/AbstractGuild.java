@@ -35,8 +35,7 @@ public abstract class AbstractGuild implements Guild {
         this.maxMembers = maxMembers > 0 ? maxMembers : 5;
         this.level = Math.max(level, 0);
         this.expNow = Math.max(expNow, 0);
-        if(owner != null)
-            addMember(owner);
+        if(owner != null) addMember(owner, Role.OWNER);
         playerApplications = new HashSet<>();
 
     }
@@ -140,12 +139,14 @@ public abstract class AbstractGuild implements Guild {
         if(members.size() >= maxMembers){
             return;
         }
+        addMember(member, Role.MEMBER);
+    }
 
-        Guild guild = member.getGuildBelong();
-        if(guild == null || guild.equals(this)){
-            member.setGuildBelong(this);
-            this.members.add(member);
-        }
+    @Override
+    public void addMember(Member member, Role role){
+        members.add(member);
+        member.setGuildBelong(this);
+        member.setRole(role);
     }
 
     @Override
@@ -214,14 +215,17 @@ public abstract class AbstractGuild implements Guild {
     }
 
     @Override
+    public void removeAnApplication(Player player) {
+        this.playerApplications.remove(player);
+    }
+
+    @Override
     public Set<Player> getPlayerApplications() {
         return this.playerApplications;
     }
 
     @Override
     public boolean isAnAdministrator(Member member){
-        if(!members.contains(member) || member.getGuildBelong() == null
-                || member.getGuildBelong() != this) return false;
         return member.getRole() == Role.CO_OWNER || member.getRole() == Role.OWNER;
     }
 
@@ -246,15 +250,15 @@ public abstract class AbstractGuild implements Guild {
 
     @Override
     public String toString(){
-        return  "========================" + "\n"
-                + "ID: " + id + "\n"
-                + "Alias: " + alias + "\n"
-                + "Members: " + members.size() + "\n"
-                + "CreateDate: " + StringUtils.formatDate(createDate) + "\n"
-                + "Level: " + level + " (" + expNow +")" + "\n"
-                + "Money: " + money + "\n"
-                + "Points: " + points + "\n"
-                + "Owner: " + (owner == null ? "null" : owner.getName()) + "\n"
-                + "========================";
+        return  "&d========================" + "\n"
+                + "&eID: &a" + id + "\n"
+                + "&eAlias: &a" + alias + "\n"
+                + "&eMembers: &a" + members.size() + "\n"
+                + "&eCreateDate: &a" + StringUtils.formatDate(createDate) + "\n"
+                + "&eLevel: &a" + level + " (&7" + expNow +"&a)" + "\n"
+                + "&eMoney: &a" + money + "\n"
+                + "&ePoints: &a" + points + "\n"
+                + "&eOwner: &a" + (owner == null ? "&cnull" : owner.getName()) + "\n"
+                + "&d========================";
     }
 }

@@ -48,7 +48,6 @@ public abstract class AbstractMember implements Member {
     @Override
     public void setGuildBelong(@Nullable Guild guildBelong) {
         this.guildBelong = guildBelong;
-        this.role = Role.MEMBER;
     }
 
     @Override
